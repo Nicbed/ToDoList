@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+
+    <!-- Informacja o zalogowanym użytkowniku -->
+    <p>
+        Logged in as: <strong>{{ request.user.username }}</strong>
+    </p>
+    
+    <!-- Przycisk do wylogowania -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+            <li class="{% if task.completed %}completed{% endif %}">
+                <strong>{{ task.title }}</strong> - {{ task.description }}
+                
+                {% if not task.completed %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <input type="hidden" name="action" value="complete">
+                        <button type="submit">Mark as Completed</button>
+                    </form>
+                {% endif %}
+                
+                <!-- Przycisk usuwający zadanie -->
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" style="color: red;">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add-task' %}">Add New Task</a>
+</body>
+</html>
