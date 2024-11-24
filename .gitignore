@@ -1,0 +1,29 @@
+# Wirtualne środowisko
+venv/
+
+# Baza danych
+db.sqlite3
+
+# Tymczasowe pliki Pythona
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+
+# Pliki środowiskowe
+.env
+
+# Logi i cache
+*.log
+*.pot
+*.sqlite3-journal
+
+# Systemowe
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+migrations/
